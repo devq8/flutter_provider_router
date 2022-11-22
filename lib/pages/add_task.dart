@@ -8,6 +8,8 @@ class AddTask extends StatelessWidget {
 
   final controller = TextEditingController();
 
+  List<int> priority_items = [1, 2, 3, 4];
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(

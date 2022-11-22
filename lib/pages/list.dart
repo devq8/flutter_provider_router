@@ -9,6 +9,12 @@ class ListPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      floatingActionButton: FloatingActionButton(
+        child: Icon(Icons.add),
+        onPressed: () {
+          context.push('/add');
+        },
+      ),
       appBar: AppBar(
         title: Text('ToDo'),
         actions: [
@@ -38,12 +44,25 @@ class ListPage extends StatelessWidget {
                   Expanded(
                       child:
                           Text(context.watch<TaskProvider>().todo[index].task)),
-                  IconButton(
-                      onPressed: () {
-                        context.read<TaskProvider>().deleteTask(
-                            context.read<TaskProvider>().todo[index]);
-                      },
-                      icon: Icon(Icons.delete_outline))
+                  if (context.watch<TaskProvider>().todo[index].isComplete)
+                    IconButton(
+                        //Enable delete button only if the task is completed
+                        onPressed: context
+                                    .watch<TaskProvider>()
+                                    .todo[index]
+                                    .isComplete ==
+                                false
+                            ? null
+                            : () {
+                                context.read<TaskProvider>().deleteTask(
+                                    context.read<TaskProvider>().todo[index]);
+                              },
+                        icon: Icon(Icons.delete_outline))
+                  else
+                    IconButton(
+                        //Enable delete button only if the task is completed
+                        onPressed: null,
+                        icon: Icon(Icons.delete_outline))
                 ],
               ),
             ),
